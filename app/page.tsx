@@ -5,7 +5,7 @@ import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import { useState, useEffect } from "react"
 import NidInput from "@/components/NidInput"
-import { getHubSpotProperties, formatPrice, HubSpotProperties } from "@/lib/hubspot"
+import { getHubSpotProperties, formatPrice, handleWhatsAppRedirect, HubSpotProperties } from "@/lib/hubspot"
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
@@ -27,6 +27,22 @@ export default function HomePage() {
       console.error('Error al cargar propiedades:', error)
     } finally {
       setIsLoading(false)
+    }
+  }
+
+  const handleSolicitarOferta = () => {
+    if (properties?.whatsapp_asesor) {
+      handleWhatsAppRedirect(properties.whatsapp_asesor, 'oferta')
+    } else {
+      console.warn('URL de WhatsApp del asesor no disponible')
+    }
+  }
+
+  const handleAgendarVisita = () => {
+    if (properties?.whatsapp_asesor) {
+      handleWhatsAppRedirect(properties.whatsapp_asesor, 'visita')
+    } else {
+      console.warn('URL de WhatsApp del asesor no disponible')
     }
   }
 
@@ -313,7 +329,10 @@ export default function HomePage() {
               </p>
               
               {/* CTA Button */}
-              <button className="bg-white hover:bg-gray-100 text-purple-700 font-semibold px-8 py-4 rounded-full text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+              <button 
+                onClick={handleSolicitarOferta}
+                className="bg-white hover:bg-gray-100 text-purple-700 font-semibold px-8 py-4 rounded-full text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+              >
                 Solicitar oferta
               </button>
             </div>
@@ -464,7 +483,10 @@ export default function HomePage() {
                   Recuerda que puedes buscarnos y agendar una visita en persona a nuestras oficinas, sabemos que es muy importante poder arreglar detalles frente a frente.
                 </p>
                 
-                <button className="bg-white hover:bg-gray-100 text-purple-700 font-semibold px-8 py-4 rounded-full text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105">
+                <button 
+                  onClick={handleAgendarVisita}
+                  className="bg-white hover:bg-gray-100 text-purple-700 font-semibold px-8 py-4 rounded-full text-lg transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
                   Agendar visita
                 </button>
               </div>

@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     }
     
     // URL de la API de HubSpot para obtener un deal por ID
-    const url = `https://api.hubapi.com/crm/v3/objects/deals/${nid}?properties=bnpl3,bnpl6,bnpl9,precio_comite_final_final_final__el_unico__`
+    const url = `https://api.hubapi.com/crm/v3/objects/deals/${nid}?properties=bnpl3,bnpl6,bnpl9,precio_comite_final_final_final__el_unico__,whatsapp_asesor`
     
     console.log('Llamando a HubSpot API desde servidor con URL:', url)
     
@@ -46,7 +46,8 @@ export async function GET(request: NextRequest) {
         bnpl3: "110000000",
         bnpl6: "112000000", 
         bnpl9: "123000000",
-        precio_comite_final_final_final__el_unico__: "100000000"
+        precio_comite_final_final_final__el_unico__: "100000000",
+        whatsapp_asesor: ""
       })
     }
 
@@ -61,7 +62,8 @@ export async function GET(request: NextRequest) {
       bnpl3: properties.bnpl3 || "110000000",
       bnpl6: properties.bnpl6 || "112000000", 
       bnpl9: properties.bnpl9 || "123000000",
-      precio_comite_final_final_final__el_unico__: properties.precio_comite_final_final_final__el_unico__ || "100000000"
+      precio_comite_final_final_final__el_unico__: properties.precio_comite_final_final_final__el_unico__ || "100000000",
+      whatsapp_asesor: properties.whatsapp_asesor || ""
     }
     
     console.log('Resultado final desde servidor:', result)
@@ -75,7 +77,8 @@ export async function GET(request: NextRequest) {
       bnpl3: "110000000",
       bnpl6: "112000000", 
       bnpl9: "123000000",
-      precio_comite_final_final_final__el_unico__: "100000000"
+      precio_comite_final_final_final__el_unico__: "100000000",
+      whatsapp_asesor: ""
     })
   }
 }
