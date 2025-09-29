@@ -2,13 +2,13 @@
 
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, Suspense } from "react"
 import { useRouter, usePathname, useSearchParams } from "next/navigation"
 import { getHubSpotProperties, formatPrice, handleWhatsAppRedirect, HubSpotProperties } from "@/lib/hubspot"
 
 const montserrat = Montserrat({ subsets: ["latin"] })
 
-export default function HomePage() {
+function HomePageContent() {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -702,5 +702,24 @@ export default function HomePage() {
         whatsapp_asesor: "https://api.whatsapp.com/send?phone=3009128399"
       })}
     </div>
+  )
+}
+
+function LoadingFallback() {
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-16 h-16 border-4 border-purple-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+        <p className="text-xl font-medium text-purple-600">Cargando...</p>
+      </div>
+    </div>
+  )
+}
+
+export default function HomePage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <HomePageContent />
+    </Suspense>
   )
 }
