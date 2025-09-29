@@ -59,6 +59,13 @@ function HomePageContent() {
     void loadProperties(submittedNid, true)
   }
 
+  // Función para calcular porcentajes de diferencia
+  const calculatePercentageDifference = (currentPrice: string, basePrice: string): number => {
+    const current = Number(currentPrice.replace(/[^\d]/g, ''))
+    const base = Number(basePrice.replace(/[^\d]/g, ''))
+    return ((current - base) / base) * 100
+  }
+
   // Efecto para carga inicial cuando hay NID en URL
   useEffect(() => {
     if (initialNid && !properties) {
@@ -185,7 +192,7 @@ function HomePageContent() {
           <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-center lg:items-start">
             {/* Left Card - Vertical */}
             <div 
-              className="w-full max-w-sm lg:max-w-none lg:w-96 mx-auto lg:mx-0 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] text-white flex flex-col relative overflow-hidden h-auto sm:h-[400px] lg:h-[617px]"
+              className="w-full max-w-sm lg:max-w-none lg:w-96 mx-auto lg:mx-0 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[2.5rem] text-white flex flex-col relative overflow-hidden h-auto sm:h-[400px] lg:h-[755px]"
               style={{ backgroundColor: "#7400C2" }}
             >
               {/* Text Content */}
@@ -218,8 +225,25 @@ function HomePageContent() {
 
             {/* Right Cards - 4 Horizontal Cards */}
             <div className="flex-1 flex flex-col gap-4 sm:gap-6 w-full max-w-2xl mx-auto lg:mx-0">
+              {/* Mensaje explicativo */}
+              <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-4 border-l-4 border-purple-500 mb-2">
+                <div className="flex items-center gap-2 mb-2">
+                  <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                  <h3 className="font-semibold text-gray-800 text-sm sm:text-base">¿Sabías que la diferencia es mínima?</h3>
+                </div>
+                <p className="text-gray-600 text-xs sm:text-sm">
+                  Por solo un <strong className="text-purple-600">1-3% adicional</strong> puedes obtener el mejor precio. 
+                  La decisión perfecta entre <strong>liquidez inmediata</strong> y <strong>máximo valor</strong>.
+                </p>
+              </div>
               {/* Card 1 - BNPL9 */}
-              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6]">
+              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6] relative">
+                {/* Etiqueta de porcentaje */}
+                <div className="absolute top-2 right-2 text-white text-xs font-bold px-2 py-1 rounded-full z-10" style={{ backgroundColor: "#8A00E6" }}>
+                  +{calculatePercentageDifference(displayProperties.bnpl9, displayProperties.precio_comite_final_final_final__el_unico__).toFixed(1)}%
+                </div>
                 <div className="flex-1 p-4 sm:p-6 text-center text-white" style={{ backgroundColor: "#8A00E6" }}>
                   <p className="text-sm sm:text-base mb-2 sm:mb-3">
                     Precio de compra
@@ -235,6 +259,12 @@ function HomePageContent() {
                   <p className="text-gray-600 text-sm sm:text-base text-center sm:text-left">
                     de <strong className="text-gray-800">{formatPrice(Number(displayProperties.bnpl9.replace(/[^\d]/g, '')) / 9)}</strong>
                   </p>
+                  <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style={{ color: "#8A00E6" }}>
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-xs sm:text-sm font-medium" style={{ color: "#8A00E6" }}>Mejor precio total</p>
+                  </div>
                 </div>
               </div>
 
@@ -244,7 +274,11 @@ function HomePageContent() {
               </div>
 
               {/* Card 2 - BNPL6 */}
-              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6]">
+              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6] relative">
+                {/* Etiqueta de porcentaje */}
+                <div className="absolute top-2 right-2 text-white text-xs font-bold px-2 py-1 rounded-full z-10" style={{ backgroundColor: "#8A00E6" }}>
+                  +{calculatePercentageDifference(displayProperties.bnpl6, displayProperties.precio_comite_final_final_final__el_unico__).toFixed(1)}%
+                </div>
                 <div className="flex-1 p-4 sm:p-6 text-center" style={{ backgroundColor: "#F9F0FF", color: "#8A00E6" }}>
                   <p className="text-sm sm:text-base mb-2 sm:mb-3">
                     Precio de compra
@@ -260,11 +294,21 @@ function HomePageContent() {
                   <p className="text-gray-600 text-sm sm:text-base text-center sm:text-left">
                     de <strong className="text-gray-800">{formatPrice(Number(displayProperties.bnpl6.replace(/[^\d]/g, '')) / 6)}</strong>
                   </p>
+                  <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style={{ color: "#8A00E6" }}>
+                      <path fillRule="evenodd" d="M10 2a1 1 0 011 1v1.323l3.954 1.582 1.599-.8a1 1 0 01.894 1.79l-1.233.616 1.738 5.42a1 1 0 01-.285 1.05A3.989 3.989 0 0115 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.715-5.349L11 6.477V16h2a1 1 0 110 2H7a1 1 0 110-2h2V6.477L6.263 7.582l1.715 5.349a1 1 0 01-.285 1.05A3.989 3.989 0 015 15a3.989 3.989 0 01-2.667-1.019 1 1 0 01-.285-1.05l1.738-5.42-1.233-.617a1 1 0 01.894-1.788l1.599.799L9 4.323V3a1 1 0 011-1z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-xs sm:text-sm font-medium" style={{ color: "#8A00E6" }}>Equilibrio perfecto</p>
+                  </div>
                 </div>
               </div>
 
               {/* Card 3 - BNPL3 */}
-              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6]">
+              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6] relative">
+                {/* Etiqueta de porcentaje */}
+                <div className="absolute top-2 right-2 text-white text-xs font-bold px-2 py-1 rounded-full z-10" style={{ backgroundColor: "#8A00E6" }}>
+                  +{calculatePercentageDifference(displayProperties.bnpl3, displayProperties.precio_comite_final_final_final__el_unico__).toFixed(1)}%
+                </div>
                 <div className="flex-1 p-4 sm:p-6 text-center" style={{ backgroundColor: "#F9F0FF", color: "#8A00E6" }}>
                   <p className="text-sm sm:text-base mb-2 sm:mb-3">
                     Precio de compra
@@ -280,11 +324,21 @@ function HomePageContent() {
                   <p className="text-gray-600 text-sm sm:text-base text-center sm:text-left">
                     de <strong className="text-gray-800">{formatPrice(Number(displayProperties.bnpl3.replace(/[^\d]/g, '')) / 3)}</strong>
                   </p>
+                  <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style={{ color: "#8A00E6" }}>
+                      <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-xs sm:text-sm font-medium" style={{ color: "#8A00E6" }}>Pagos rápidos</p>
+                  </div>
                 </div>
               </div>
 
               {/* Card 4 - Precio Comité Final */}
-              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6]">
+              <div className="rounded-xl sm:rounded-2xl shadow-md border border-purple-100 flex flex-col sm:flex-row items-stretch overflow-hidden hover:border-2 transition-all duration-200 hover:border-[#8A00E6] relative">
+                {/* Etiqueta especial para liquidez inmediata */}
+                <div className="absolute top-2 right-2 text-white text-xs font-bold px-2 py-1 rounded-full z-10" style={{ backgroundColor: "#8A00E6" }}>
+                  BASE
+                </div>
                 <div className="flex-1 p-4 sm:p-6 text-center" style={{ backgroundColor: "#F9F0FF", color: "#8A00E6" }}>
                   <p className="text-sm sm:text-base mb-2 sm:mb-3">
                     Precio de compra
@@ -297,6 +351,13 @@ function HomePageContent() {
                   <p className="text-gray-600 text-sm sm:text-base text-center sm:text-left">
                     <strong className="text-gray-800">Te pagamos de inmediato</strong>
                   </p>
+                  <div className="flex items-center justify-center sm:justify-start gap-1 mt-2">
+                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" style={{ color: "#8A00E6" }}>
+                      <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clipRule="evenodd" />
+                    </svg>
+                    <p className="text-xs sm:text-sm font-medium" style={{ color: "#8A00E6" }}>Liquidez inmediata</p>
+                  </div>
                 </div>
               </div>
             </div>
